@@ -11,13 +11,8 @@
 
 ## 效果演示
 
+[Sheep Demo](https://pgthinker.me/wp-content/uploads/2024/04/sheep.webm)
 
-![](doc/images/setting.png)
-
-
-<video width="720" height="303" controls>
-<source src="doc/video/sheep.webm" type="video/mp4">
-</video>
 
 
 
