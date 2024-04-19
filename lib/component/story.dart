@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sheep/model/story.dart';
@@ -30,9 +29,12 @@ class _StoryCardState extends State<StoryCard> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 50),
+              child: const Icon(Icons.schedule_sharp,size: 50,),
+            ),
+            Container(
               padding: const EdgeInsets.all(4),
               decoration: BoxDecoration(
-
                 boxShadow: [
                   BoxShadow(
                       color: !Get.isDarkMode ? Colors.white70 : Colors.black54,

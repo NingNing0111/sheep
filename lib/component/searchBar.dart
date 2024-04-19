@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class NovelSearch extends StatefulWidget {
+  const NovelSearch({super.key});
+
   @override
   State<StatefulWidget> createState() => _NovelSearchState();
 }
@@ -18,19 +20,18 @@ class _NovelSearchState extends State<NovelSearch> {
           hintLabel: "搜索书名",
           onSubmitted: (value) {
             setState(() {
-              this.searchVal = value;
+              searchVal = value;
             });
           },
         ),
       ),
-      body: Text("搜索值是：${this.searchVal}"),
+      body: Text("搜索值是：$searchVal"),
     );
   }
 }
 
 class SearchAppBar extends StatefulWidget {
-  SearchAppBar({Key? key, required this.hintLabel, required this.onSubmitted})
-      : super(key: key);
+  const SearchAppBar({super.key, required this.hintLabel, required this.onSubmitted});
   final String hintLabel;
   // 回调函数
   final Function(String) onSubmitted;
@@ -41,12 +42,13 @@ class SearchAppBar extends StatefulWidget {
 
 class _SearchAppBarState extends State<SearchAppBar> {
   // 焦点对象
-  FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode();
   // 文本的值
   String searchVal = '';
   //用于清空输入框
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
+  @override
   void initState() {
     super.initState();
     //  获取焦点
@@ -65,7 +67,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
       // appBar默认高度是56，这里搜索框设置为40
       height: 40,
       // 设置padding
-      padding: EdgeInsets.only(left: 20),
+      padding: const EdgeInsets.only(left: 20),
       // 设置子级位置
       alignment: Alignment.centerLeft,
       // 设置修饰
@@ -78,7 +80,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
         autofocus: true,
         decoration: InputDecoration(
             hintText: widget.hintLabel,
-            hintStyle: TextStyle(color: Colors.grey),
+            hintStyle: const TextStyle(color: Colors.grey),
             // 取消掉文本框下面的边框
             border: InputBorder.none,
             icon: Padding(
@@ -89,13 +91,13 @@ class _SearchAppBarState extends State<SearchAppBar> {
                   color: Theme.of(context).primaryColor,
                 )),
             //  关闭按钮，有值时才显示
-            suffixIcon: this.searchVal.isNotEmpty
+            suffixIcon: searchVal.isNotEmpty
                 ? IconButton(
-              icon: Icon(Icons.close),
+              icon: const Icon(Icons.close),
               onPressed: () {
                 //   清空内容
                 setState(() {
-                  this.searchVal = '';
+                  searchVal = '';
                   _controller.clear();
                 });
               },
@@ -103,7 +105,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
                 : null),
         onChanged: (value) {
           setState(() {
-            this.searchVal = value;
+            searchVal = value;
           });
         },
         onSubmitted: (value) {

@@ -1,5 +1,4 @@
 
-import 'package:drift/drift.dart';
 import 'package:get/get.dart';
 
 import '../model/story.dart';

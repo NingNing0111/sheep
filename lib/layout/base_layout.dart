@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sheep/page/chat.dart';
 import 'package:sheep/page/period.dart';
 import 'package:sheep/page/story.dart';
+import 'package:sheep/service/assets_service.dart';
 import '../config/base.dart';
 
 class BaseLayout extends StatefulWidget {
@@ -38,8 +39,12 @@ class _BaseLayoutState extends State<BaseLayout> {
         title: const Text(BaseConfig.APPLICATION_NAME),
         centerTitle: true,
         leading: InkWell(
-          onTap: () => {Get.toNamed("/")},
-          child: Image.asset("assets/images/sheep_logo.png"),
+          onTap: () => {
+            setState(() {
+              currIndex = 0;
+            })
+          },
+          child: Image.asset(AssetsManage.sheepLogo),
         ),
         actions: <Widget>[
           Container(

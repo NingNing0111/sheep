@@ -8,6 +8,8 @@ import '../model/story.dart';
 class StoryPage extends GetView<StoryPageController> {
   final _storyController = Get.find<StoryPageController>();
 
+  StoryPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
