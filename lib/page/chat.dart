@@ -9,29 +9,31 @@ import 'package:get/get.dart';
 import 'package:sheep/component/chat.dart';
 import 'package:sheep/component/chat_item.dart';
 import 'package:sheep/controller/chat.dart';
+import 'package:sheep/controller/setting.dart';
 import 'package:sheep/model/message.dart';
 import 'package:sheep/service/iflytek_service.dart';
 import 'package:sheep/service/openai_service.dart';
 
 import '../main.dart';
 
-class ChatPage extends GetResponsiveView<ChatPageController> {
-  ChatPage({super.key});
 
-  final _chatPageController = Get.find<ChatPageController>();
+class ChatPage extends GetResponsiveView<ChatPageController> {
+  late final ChatPageController _chatPageController;
+  late final SettingPageController _settingController;
+
+  ChatPage({super.key}) {
+    _chatPageController = Get.find<ChatPageController>();
+    _settingController = Get.find<SettingPageController>();
+  }
 
   // 创建一个 ScrollController
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _textEditingController = TextEditingController();
-  static const String token =
-      "sk-W9kYeE3JfWM86sr66xxxxxxxxxxxxxxxB96fAd460353Dc7a";
-  static const String url = "https://api.mnzdna.xyz/";
-  static const String appId = "xxx";
-  static const String apiSecret = "xxx";
-  static const String apiKey = "xxx";
-  final OpenAIService _openAIService = OpenAIService(token: token, url: url);
-  final XfService _xfService =
-      XfService(appId: appId, apiSecret: apiSecret, apiKey: apiKey);
+
+  late final OpenAIService _openAIService =
+      OpenAIService(token: _settingController.openAIApiKey.value, url: _settingController.openAIBaseUrl.value);
+  late final XfService _xfService =
+      XfService(appId: _settingController.xfAppID.value, apiSecret: _settingController.xfApiSecret.value, apiKey: _settingController.xfApiKey.value);
 
   final AudioPlayer audioPlayer = AudioPlayer();
   List<int> _currByte = []; // 介绍下四大名著
@@ -90,8 +92,30 @@ class ChatPage extends GetResponsiveView<ChatPageController> {
   }
 
   Future<void> sendMessage() async {
+    // key为空
+    if(_settingController.openAIApiKey.value.isEmpty){
+      Get.defaultDialog(
+        title: "配置错误",
+        middleText: "检测到您未设置Key，请前往设置",
+        onConfirm: ()=>Get.back(),
+      );
+      return;
+    }
+    // 如果开启了语音回复
+    if(_settingController.disabledXfVoice.value && (_settingController.xfAppID.value.isEmpty || _settingController.xfApiSecret.value.isEmpty || _settingController.xfApiKey.value.isEmpty)){
+      Get.defaultDialog(
+        title: "配置错误",
+        middleText: "检测到您开启了语音回复，但未配置相关信息",
+        onConfirm: ()=>Get.back(),
+      );
+      return;
+    }
     final String sendText = _textEditingController.text;
     if (sendText.isEmpty) {
+      Get.defaultDialog(
+        title: "发送失败",
+        middleText: "发送内容不能为空",
+      );
       return;
     }
     _chatPageController.setSendText(_textEditingController.text);
@@ -104,9 +128,17 @@ class ChatPage extends GetResponsiveView<ChatPageController> {
         _chatPageController.messages.length + 1,
         false));
     var chatResponse = await _openAIService.simpleChat(sendText);
+    logger.f("AI回复内容:$chatResponse");
     _chatPageController.setAIResponse(chatResponse);
-    log(chatResponse);
-    await toTTS(chatResponse); //
+    if(!_settingController.disabledXfVoice.value){
+      _chatPageController.addMessage(Message(
+          _chatPageController.aiResponse.value,
+          OpenAIChatMessageRole.assistant,
+          _chatPageController.messages.length + 1,
+          true));
+    }else{
+      await toTTS(chatResponse); //
+    }
   }
 
   Future<void> toTTS(String text) async {
@@ -140,4 +172,5 @@ class ChatPage extends GetResponsiveView<ChatPageController> {
           true));
     }
   }
+
 }

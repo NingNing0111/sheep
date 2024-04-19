@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:sheep/config/base.dart';
 import 'package:sheep/config/router/router.dart';
+import 'package:sheep/controller/setting.dart';
 import 'package:sheep/controller/story.dart';
 import 'config/theme/theme.dart';
 import 'controller/chat.dart';
@@ -20,17 +21,21 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    Get.put(ChatPageController());
-    Get.put(StoryPageController());
+    Get.lazyPut(()=>ChatPageController());
+    Get.lazyPut(()=>StoryPageController());
+    Get.lazyPut(()=>SettingPageController());
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: BaseConfig.APPLICATION_TITLE,
+
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       home: const BaseLayout(),
       initialRoute: BaseConfig.BASE_INIT_ROUTER,
       defaultTransition: Transition.rightToLeft,
       getPages: routers,
+      themeMode: ThemeMode.system,
       unknownRoute: unknown_page,
     );
   }
