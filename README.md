@@ -11,11 +11,7 @@
 
 ## 效果演示
 
-<<<<<<< HEAD
-<video width="400" controls>
-  <source src="https://github.com/NingNing0111/sheep/raw/master/doc/video/sheep.webm" type="video/webm">
-</video>
-=======
+
 [Sheep Demo](https://pgthinker.me/wp-content/uploads/2024/04/sheep.webm)
 
 
