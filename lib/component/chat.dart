@@ -20,7 +20,8 @@ class _InitChatWindowsState extends State<InitChatWindows> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(CupertinoIcons.sparkles),
+          Icon(CupertinoIcons.sparkles,size: 40,color: Colors.black54,),
+          SizedBox(height: 20,),
           Text(
             "How can I help you today?",
             textAlign: TextAlign.center,

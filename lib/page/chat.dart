@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:typed_data';
 
 import 'package:audioplayers/audioplayers.dart';
@@ -158,9 +157,11 @@ class ChatPage extends GetResponsiveView<ChatPageController> {
   void onEvent(event) {
     logger.f(event);
     int status = event['status'];
-    String base64 = event['audio'];
-    Uint8List base64Byte = base64Decode(base64);
-    _currByte = [..._currByte, ...base64Byte];
+    if(event['audio'] != null){
+      String base64 = event['audio'];
+      Uint8List base64Byte = base64Decode(base64);
+      _currByte = [..._currByte, ...base64Byte];
+    }
     if (status == 2) {
       audioPlayer.play(BytesSource(Uint8List.fromList(_currByte)));
       _currByte.clear();

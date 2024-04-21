@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: BaseConfig.APPLICATION_TITLE,
-
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       home: const BaseLayout(),

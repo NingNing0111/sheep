@@ -17,9 +17,9 @@ class BaseLayout extends StatefulWidget {
 
 class _BaseLayoutState extends State<BaseLayout> {
   final _bottomNavigationBarItems = [
-    const BottomNavigationBarItem(icon: Icon(Icons.adb), label: "对话"),
-    const BottomNavigationBarItem(
-        icon: Icon(Icons.account_balance_wallet), label: "听故事"),
+    BottomNavigationBarItem(icon: ImageIcon(AssetImage(AssetsManage.chatBottom),size: 30,), label: "对话"),
+    BottomNavigationBarItem(
+        icon: ImageIcon(AssetImage(AssetsManage.storyBottom),size: 30,), label: "听故事"),
     const BottomNavigationBarItem(
         icon: Icon(Icons.access_time_filled), label: "经期计算"),
   ];
@@ -36,6 +36,7 @@ class _BaseLayoutState extends State<BaseLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.pink,
         title: const Text(BaseConfig.APPLICATION_NAME),
         centerTitle: true,
         leading: InkWell(
@@ -44,6 +45,7 @@ class _BaseLayoutState extends State<BaseLayout> {
               currIndex = 0;
             })
           },
+
           child: Image.asset(AssetsManage.sheepLogo),
         ),
         actions: <Widget>[
@@ -53,6 +55,7 @@ class _BaseLayoutState extends State<BaseLayout> {
               onTap: () => {Get.toNamed("/setting")},
               child: const Icon(
                 Icons.settings,
+                color: Colors.white,
                 size: 30,
               ),
             ),

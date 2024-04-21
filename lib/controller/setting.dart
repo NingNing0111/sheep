@@ -12,7 +12,7 @@ class SettingPageController extends GetxController{
 
   // ------ OpenAI 设置
   // url地址
-  final openAIBaseUrl = "".obs;
+  final openAIBaseUrl = "https://api.openai.com/".obs;
   // key
   final openAIApiKey = "".obs;
   // 对话模型

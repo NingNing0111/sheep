@@ -27,8 +27,7 @@ class XfService {
 
   IOWebSocketChannel _createWebSocketChannel(String url) {
     return IOWebSocketChannel.connect(assembleAuthUrl(url, _apiKey, _apiSecret),
-        connectTimeout: const Duration(seconds: 5),
-        pingInterval: const Duration(seconds: 5));
+        );
   }
 
   void close() {
@@ -78,7 +77,7 @@ class XfService {
  // 介绍下自己
   Map<String, dynamic> createTTSRequestParam(
       {String aue = "lame",
-      String vcn = "x4_lingxiaolu_en",
+      String vcn = "x4_lingfeizhe_zl",
       int speed = 50,
       int volume = 50,
       int pitch = 50,
