@@ -35,7 +35,7 @@ class XfService {
   }
 
   void setupTTSListener(Function(dynamic) onEvent,
-      {Function? onError, Function? onDone}) {
+      {Function(dynamic)? onError, Function? onDone}) {
     // 监听 TTS 通道的数据流
     _ttsChannel?.stream.listen(
       (event) {
@@ -52,7 +52,7 @@ class XfService {
       onError: (error) {
         // 如果提供了 onError 参数，则使用它处理错误，否则记录日志
         logger.e('WebSocket error: $error');
-        onError?.call();
+        onError?.call(error);
       },
       onDone: () {
         logger.i('WebSocket connection closed');

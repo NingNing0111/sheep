@@ -4,6 +4,7 @@ import "package:sheep/page/chat.dart";
 import "package:sheep/page/period.dart";
 import "package:sheep/page/setting.dart";
 import "package:sheep/page/story.dart";
+import "package:sheep/page/todo.dart";
 import "package:sheep/page/unknown.dart";
 
 final routers = [
@@ -11,7 +12,8 @@ final routers = [
   GetPage(name: "/chat", page: () => ChatPage()),
   GetPage(name: "/setting", page: () => SettingPage()),
   GetPage(name: "/period", page: () =>  PeriodPage()),
-  GetPage(name: "/story", page: () => StoryPage())
+  GetPage(name: "/story", page: () => StoryPage()),
+  GetPage(name: "/todo", page: ()=>TodoPage()),
 ];
 
 final unknown_page = GetPage(name: "/404", page: () => const UnknownRoutePage());

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:sheep/page/chat.dart';
 import 'package:sheep/page/period.dart';
 import 'package:sheep/page/story.dart';
+import 'package:sheep/page/todo.dart';
 import 'package:sheep/service/assets_service.dart';
 import '../config/base.dart';
 
@@ -20,14 +21,16 @@ class _BaseLayoutState extends State<BaseLayout> {
     BottomNavigationBarItem(icon: ImageIcon(AssetImage(AssetsManage.chatBottom),size: 30,), label: "对话"),
     BottomNavigationBarItem(
         icon: ImageIcon(AssetImage(AssetsManage.storyBottom),size: 30,), label: "听故事"),
-    const BottomNavigationBarItem(
-        icon: Icon(Icons.access_time_filled), label: "经期计算"),
+    BottomNavigationBarItem(icon: Icon(Icons.today_outlined,size: 30,),label: "Todo")
+    // const BottomNavigationBarItem(
+    //     icon: Icon(Icons.access_time_filled), label: "经期计算"),
   ];
 
   final List<Widget> _bottomNavigationBarPage = [
     ChatPage(),
     StoryPage(),
-    const PeriodPage()
+    TodoPage(),
+    // const PeriodPage()
   ];
 
   int currIndex = 0;

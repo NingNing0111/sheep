@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 
-final class _OpenAIAPI {
+class _OpenAIAPI {
   static const String Chat_Completions = "v1/chat/completions";
   static const String Images_Generations = "v1/images/generations";
 }

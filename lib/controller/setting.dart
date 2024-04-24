@@ -12,9 +12,9 @@ class SettingPageController extends GetxController{
 
   // ------ OpenAI 设置
   // url地址
-  final openAIBaseUrl = "https://api.openai.com/".obs;
+  final openAIBaseUrl = "https://api.mnzdna.xyz/".obs;
   // key
-  final openAIApiKey = "".obs;
+  final openAIApiKey = "sk-W9kYeE3Jxxxxxxxxxxxx06B96fAd460353Dc7a".obs;
   // 对话模型
   final chatModel = "gpt-3.5-turbo".obs;
   // 最大聊天记录长度
@@ -26,7 +26,7 @@ class SettingPageController extends GetxController{
 
   // ------ 科大讯飞 设置
   // 是否开启语音回复
-  final disabledXfVoice = false.obs;
+  final disabledXfVoice = true.obs;
   // api
   final xfAppID = "".obs;
   final xfApiSecret = "".obs;
