@@ -42,7 +42,9 @@ class StoryService {
       "app_id": _appID,
       "app_secret": _appSecret
     });
+    logger.e(resp);
     if (resp.data['code'] == 1) {
+
       var data = resp.data['data'];
       final List<Map<String, dynamic>> dataList =
           List<Map<String, dynamic>>.from(data);

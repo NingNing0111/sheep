@@ -18,15 +18,13 @@ class TodoPageController extends GetxController {
 
   void initData() {
     // 从数据库中加载数据
-    List history = _myBox.get(_DBKEY);
+    var history = _myBox.get(_DBKEY);
 
-    if (history.isEmpty) {
+    if (history == null || history!.isEmpty) {
       todoList = RxList([]);
     } else {
-      todoList = RxList([]);
-      for(Task item in history){
-        todoList.add(item);
-      }
+      // 如果数据库中有数据，则将其加载到todoList中
+      todoList = RxList<Task>(List<Task>.from(history));
     }
 
   }

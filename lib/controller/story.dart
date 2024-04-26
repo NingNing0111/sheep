@@ -25,6 +25,7 @@ class StoryPageController extends GetxController {
   }
 
   Future<void> initStoryType() async {
+    isTypeDataRead(false);
     var storyTypes = await _storyService.getStoryType();
     currType.value = storyTypes[0];
     storyTypesList.assignAll(storyTypes);
@@ -33,9 +34,11 @@ class StoryPageController extends GetxController {
   }
 
   Future<void> initStoryList() async {
+    isStoryDataRead(false);
+    storyList.clear();
     List<Story> resStoryList = await _storyService.getStoryList(
         currType.value.typeId, currPage.value);
-    storyList.assignAll(resStoryList);
+    storyList.addAll(resStoryList);
     isStoryDataRead(true);
     logger.f(resStoryList);
   }

@@ -15,7 +15,6 @@ import 'package:sheep/service/openai_service.dart';
 
 import '../main.dart';
 
-
 class ChatPage extends GetResponsiveView<ChatPageController> {
   late final ChatPageController _chatPageController;
   late final SettingPageController _settingController;
@@ -29,13 +28,17 @@ class ChatPage extends GetResponsiveView<ChatPageController> {
   final ScrollController _scrollController = ScrollController();
   final TextEditingController _textEditingController = TextEditingController();
 
-  late final OpenAIService _openAIService =
-      OpenAIService(token: _settingController.openAIApiKey.value, url: _settingController.openAIBaseUrl.value);
-  late final XfService _xfService =
-      XfService(appId: _settingController.xfAppID.value, apiSecret: _settingController.xfApiSecret.value, apiKey: _settingController.xfApiKey.value);
+  late final OpenAIService _openAIService = OpenAIService(
+      token: _settingController.openAIApiKey.value,
+      url: _settingController.openAIBaseUrl.value);
+  late final XfService _xfService = XfService(
+      appId: _settingController.xfAppID.value,
+      apiSecret: _settingController.xfApiSecret.value,
+      apiKey: _settingController.xfApiKey.value);
 
   final AudioPlayer audioPlayer = AudioPlayer();
-  List<int> _currByte = []; // 介绍下四大名著
+  List<int> _currByte = [];
+  var isWait = false.obs;
 
   @override
   Widget? builder() {
@@ -70,42 +73,73 @@ class ChatPage extends GetResponsiveView<ChatPageController> {
           }
         }),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(8),
-          child: TextField(
-            controller: _textEditingController,
-            decoration: InputDecoration(
-              border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-              hintText: "请输入内容以发起对话",
-              suffixIcon: GestureDetector(
-                  onTap: sendMessage,
+            padding: const EdgeInsets.all(10),
+            child: TextField(
+              controller: _textEditingController,
+              decoration: InputDecoration(
+                prefixIcon: GestureDetector(
                   child: const Icon(
-                    Icons.send,
-                    size: 30,
-                  )),
-              filled: true,
-              fillColor: Colors.blueGrey,
-            ),
-          ),
-        ));
+                    Icons.cleaning_services_outlined,
+                    color: Colors.green,
+                  ),
+                  onTap: () {
+                    if(_chatPageController.messages.isNotEmpty){
+                      Get.defaultDialog(
+                          title: "对话记录删除",
+                          middleText: "确定清空所有对话信息吗？",
+                          onCancel: () {
+                            Get.back();
+                          },
+                          onConfirm: () {
+                            _chatPageController.messages.clear();
+                            Get.back();
+                          },
+                          textCancel: "取消",
+                          textConfirm: "确定");
+                    }
+                  },
+                ),
+                border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                    borderSide: BorderSide.none),
+                hintText: "请输入内容以发起对话",
+                suffixIcon: Obx(() => isWait.value
+                    ? const Padding(
+                        padding: EdgeInsets.all(8),
+                        child: CircularProgressIndicator(),
+                      )
+                    : GestureDetector(
+                        onTap: sendMessage,
+                        child: const Icon(
+                          Icons.send,
+                          size: 30,
+                        ))),
+                filled: true,
+                fillColor: Colors.pink[150],
+              ),
+            )));
   }
 
   Future<void> sendMessage() async {
+    isWait.value = true;
     // key为空
-    if(_settingController.openAIApiKey.value.isEmpty){
+    if (_settingController.openAIApiKey.value.isEmpty) {
       Get.defaultDialog(
         title: "配置错误",
         middleText: "检测到您未设置Key，请前往设置",
-        onConfirm: ()=>Get.back(),
+        onConfirm: () => Get.back(),
       );
       return;
     }
     // 如果开启了语音回复
-    if(_settingController.disabledXfVoice.value && (_settingController.xfAppID.value.isEmpty || _settingController.xfApiSecret.value.isEmpty || _settingController.xfApiKey.value.isEmpty)){
+    if (_settingController.disabledXfVoice.value &&
+        (_settingController.xfAppID.value.isEmpty ||
+            _settingController.xfApiSecret.value.isEmpty ||
+            _settingController.xfApiKey.value.isEmpty)) {
       Get.defaultDialog(
         title: "配置错误",
         middleText: "检测到您开启了语音回复，但未配置相关信息",
-        onConfirm: ()=>Get.back(),
+        onConfirm: () => Get.back(),
       );
       return;
     }
@@ -129,13 +163,14 @@ class ChatPage extends GetResponsiveView<ChatPageController> {
     var chatResponse = await _openAIService.simpleChat(sendText);
     logger.f("AI回复内容:$chatResponse");
     _chatPageController.setAIResponse(chatResponse);
-    if(!_settingController.disabledXfVoice.value){
+    if (!_settingController.disabledXfVoice.value) {
       _chatPageController.addMessage(Message(
           _chatPageController.aiResponse.value,
           OpenAIChatMessageRole.assistant,
           _chatPageController.messages.length + 1,
           true));
-    }else{
+      isWait.value = false;
+    } else {
       await toTTS(chatResponse); //
     }
   }
@@ -143,7 +178,8 @@ class ChatPage extends GetResponsiveView<ChatPageController> {
   Future<void> toTTS(String text) async {
     await audioPlayer.stop();
     initTTS();
-    Map<String, dynamic> param = _xfService.createTTSRequestParam(text: text);
+    Map<String, dynamic> param = _xfService.createTTSRequestParam(
+        text: text, vcn: _settingController.ttsVCN.value);
     _xfService.ttsSendText(param);
   }
 
@@ -157,7 +193,7 @@ class ChatPage extends GetResponsiveView<ChatPageController> {
   void onEvent(event) {
     logger.f(event);
     int status = event['status'];
-    if(event['audio'] != null){
+    if (event['audio'] != null) {
       String base64 = event['audio'];
       Uint8List base64Byte = base64Decode(base64);
       _currByte = [..._currByte, ...base64Byte];
@@ -171,7 +207,7 @@ class ChatPage extends GetResponsiveView<ChatPageController> {
           OpenAIChatMessageRole.assistant,
           _chatPageController.messages.length + 1,
           true));
+      isWait.value = false;
     }
   }
-
 }

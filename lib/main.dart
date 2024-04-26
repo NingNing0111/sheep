@@ -31,10 +31,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     Get.lazyPut(()=>ChatPageController());
     Get.lazyPut(()=>StoryPageController());
     Get.lazyPut(()=>SettingPageController());
     Get.lazyPut(() => TodoPageController());
+    final _settingController = Get.find<SettingPageController>();
+
 
     return GetMaterialApp(
 

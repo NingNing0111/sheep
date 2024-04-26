@@ -9,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:sheep/config/theme/theme.dart';
 import 'package:sheep/controller/story.dart';
 import 'package:sheep/main.dart';
-import 'package:sheep/service/assets_service.dart';
 
 import '../controller/setting.dart';
 import '../service/iflytek_service.dart';
@@ -204,7 +203,7 @@ class StoryPage extends GetView<StoryPageController> {
     logger.f("文本:$text");
     await audioPlayer.stop();
     initTTS();
-    Map<String, dynamic> param = _xfService.createTTSRequestParam(text: text);
+    Map<String, dynamic> param = _xfService.createTTSRequestParam(text: text,vcn: _settingController.ttsVCN.value);
     _xfService.ttsSendText(param);
   }
 

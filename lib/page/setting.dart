@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:sheep/config/base.dart';
 import 'package:sheep/config/theme/theme.dart';
 import 'package:sheep/controller/setting.dart';
+import 'package:sheep/main.dart';
 
 class SettingPage extends GetResponsiveView<SettingPageController> {
   SettingPage({super.key});
@@ -25,55 +28,55 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
         body: ListView(
           children: [
             const Divider(),
-            Container(
-              margin: const EdgeInsets.only(bottom: 5),
-              padding: const EdgeInsets.all(5),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Text(
-                    "系统设置",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  Obx(() => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                              child: RadioListTile(
-                                  title: const Text("系统"),
-                                  value: ThemeMode.system,
-                                  groupValue:
-                                      _settingController.themeMode.value,
-                                  onChanged: (value) {
-                                    _settingController
-                                        .setThemMode(ThemeMode.system);
-                                  })),
-                          Expanded(
-                              child: RadioListTile(
-                                  title: const Text("白天"),
-                                  value: ThemeMode.light,
-                                  groupValue:
-                                      _settingController.themeMode.value,
-                                  onChanged: (value) {
-                                    _settingController
-                                        .setThemMode(ThemeMode.light);
-                                  })),
-                          Expanded(
-                              child: RadioListTile(
-                                  title: const Text("黑夜"),
-                                  value: ThemeMode.dark,
-                                  groupValue:
-                                      _settingController.themeMode.value,
-                                  onChanged: (value) {
-                                    _settingController
-                                        .setThemMode(ThemeMode.dark);
-                                  })),
-                        ],
-                      ))
-                ],
-              ),
-            ),
+            // Container(
+            //   margin: const EdgeInsets.only(bottom: 5),
+            //   padding: const EdgeInsets.all(5),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     mainAxisAlignment: MainAxisAlignment.start,
+            //     children: [
+            //       const Text(
+            //         "系统设置",
+            //         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            //       ),
+            //       Obx(() => Row(
+            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //             children: [
+            //               Expanded(
+            //                   child: RadioListTile(
+            //                       title: const Text("系统"),
+            //                       value: ThemeMode.system,
+            //                       groupValue:
+            //                           _settingController.themeMode.value,
+            //                       onChanged: (value) {
+            //                         _settingController
+            //                             .setThemMode(ThemeMode.system);
+            //                       })),
+            //               Expanded(
+            //                   child: RadioListTile(
+            //                       title: const Text("白天"),
+            //                       value: ThemeMode.light,
+            //                       groupValue:
+            //                           _settingController.themeMode.value,
+            //                       onChanged: (value) {
+            //                         _settingController
+            //                             .setThemMode(ThemeMode.light);
+            //                       })),
+            //               Expanded(
+            //                   child: RadioListTile(
+            //                       title: const Text("黑夜"),
+            //                       value: ThemeMode.dark,
+            //                       groupValue:
+            //                           _settingController.themeMode.value,
+            //                       onChanged: (value) {
+            //                         _settingController
+            //                             .setThemMode(ThemeMode.dark);
+            //                       })),
+            //             ],
+            //           ))
+            //     ],
+            //   ),
+            // ),
             Container(
               margin: const EdgeInsets.only(bottom: 5),
               padding: const EdgeInsets.all(5),
@@ -104,14 +107,14 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                                     _showOpenAIKey.value =
                                         !_showOpenAIKey.value;
                                   },
-                                  icon: Icon(!_showOpenAIKey.value
+                                  icon: Icon(_showOpenAIKey.value
                                       ? Icons.visibility
                                       : Icons.visibility_off),
                                 ),
                                 hintText: _settingController.openAIApiKey.value,
                                 label: const Text("Key")),
                             initialValue: _settingController.openAIApiKey.value,
-                            obscureText: _showOpenAIKey.value,
+                            obscureText: !_showOpenAIKey.value,
                             onChanged: (value) =>
                                 _settingController.setOpenAIApiKey(value),
                           ),
@@ -225,7 +228,7 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                                               _showXfAppID.value =
                                                   !_showXfAppID.value;
                                             },
-                                            icon: Icon(!_showXfAppID.value
+                                            icon: Icon(_showXfAppID.value
                                                 ? Icons.visibility
                                                 : Icons.visibility_off),
                                           ),
@@ -234,7 +237,7 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                                           label: const Text("AppID")),
                                       initialValue:
                                           _settingController.xfAppID.value,
-                                      obscureText: _showXfAppID.value,
+                                      obscureText: !_showXfAppID.value,
                                       onChanged: (value) =>
                                           _settingController.setXfAppID(value),
                                     ),
@@ -245,7 +248,7 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                                               _showXfSecret.value =
                                                   !_showXfSecret.value;
                                             },
-                                            icon: Icon(!_showXfSecret.value
+                                            icon: Icon(_showXfSecret.value
                                                 ? Icons.visibility
                                                 : Icons.visibility_off),
                                           ),
@@ -254,7 +257,7 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                                           label: const Text("ApiSecret")),
                                       initialValue:
                                           _settingController.xfApiSecret.value,
-                                      obscureText: _showXfSecret.value,
+                                      obscureText: !_showXfSecret.value,
                                       onChanged: (value) => _settingController
                                           .setXfApiSecret(value),
                                     ),
@@ -265,7 +268,7 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                                               _showXfKey.value =
                                                   !_showXfKey.value;
                                             },
-                                            icon: Icon(!_showXfKey.value
+                                            icon: Icon(_showXfKey.value
                                                 ? Icons.visibility
                                                 : Icons.visibility_off),
                                           ),
@@ -274,10 +277,26 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                                           label: const Text("ApiKey")),
                                       initialValue:
                                           _settingController.xfApiKey.value,
-                                      obscureText: _showXfKey.value,
+                                      obscureText: !_showXfKey.value,
                                       onChanged: (value) =>
                                           _settingController.setXfApiKey(value),
                                     ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text("语音角色"),
+                                        DropdownButton<String>(
+                                            value:
+                                                _settingController.ttsVCN.value,
+                                            items: builderVcnItem(),
+                                            onChanged: (Object? value) {
+                                              logger.f(value);
+                                              _settingController.ttsVCN.value =
+                                                  value.toString();
+                                            })
+                                      ],
+                                    )
                                   ],
                                 ))
                               : const SizedBox()
@@ -288,5 +307,18 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
             ),
           ],
         ));
+  }
+
+  List<DropdownMenuItem<String>> builderVcnItem() {
+    List<DropdownMenuItem<String>> menus = [];
+    for (var e in BaseConfig.BASE_VCN) {
+      menus.add(
+        DropdownMenuItem<String>(
+          value: e['value'],
+          child: Text(e['name'].toString()),
+        ),
+      );
+    }
+    return menus;
   }
 }

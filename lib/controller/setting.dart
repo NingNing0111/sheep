@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sheep/config/base.dart';
 
 
 // 介绍下自己
@@ -14,7 +15,7 @@ class SettingPageController extends GetxController{
   // url地址
   final openAIBaseUrl = "https://api.mnzdna.xyz/".obs;
   // key
-  final openAIApiKey = "sk-W9kYeE3Jxxxxxxxxxxxx06B96fAd460353Dc7a".obs;
+  final openAIApiKey = "sk-W9kYeExxxxxxxxxxxxxx0353Dc7a".obs;
   // 对话模型
   final chatModel = "gpt-3.5-turbo".obs;
   // 最大聊天记录长度
@@ -31,6 +32,8 @@ class SettingPageController extends GetxController{
   final xfAppID = "".obs;
   final xfApiSecret = "".obs;
   final xfApiKey = "".obs;
+  // 语音模型
+  final ttsVCN = "xiaoyan".obs;
 
   void setThemMode(ThemeMode model) async {
     themeMode.value = model;
@@ -86,6 +89,11 @@ class SettingPageController extends GetxController{
 
   void setXfApiKey(String apiKey) async {
     xfApiKey.value = apiKey;
+    update();
+  }
+
+  void setVcn(String vcn) async {
+    ttsVCN.value = vcn;
     update();
   }
 
