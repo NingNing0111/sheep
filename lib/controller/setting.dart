@@ -1,15 +1,13 @@
 
-import 'package:flutter/material.dart';
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:get/get.dart';
-import 'package:sheep/config/base.dart';
 
 
 // 介绍下自己
 class SettingPageController extends GetxController{
   // ------ 系统 设置
   // 主题类型
-  final themeMode = ThemeMode.system.obs;
-
+  final themeMode = AdaptiveThemeMode.system.obs;
 
   // ------ OpenAI 设置
   // url地址
@@ -35,7 +33,7 @@ class SettingPageController extends GetxController{
   // 语音模型
   final ttsVCN = "xiaoyan".obs;
 
-  void setThemMode(ThemeMode model) async {
+  void setThemMode(AdaptiveThemeMode model) async {
     themeMode.value = model;
     update();
   }

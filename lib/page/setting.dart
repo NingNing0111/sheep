@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:sheep/config/base.dart';
-import 'package:sheep/config/theme/theme.dart';
 import 'package:sheep/controller/setting.dart';
 import 'package:sheep/main.dart';
 
@@ -28,55 +26,59 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
         body: ListView(
           children: [
             const Divider(),
-            // Container(
-            //   margin: const EdgeInsets.only(bottom: 5),
-            //   padding: const EdgeInsets.all(5),
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     mainAxisAlignment: MainAxisAlignment.start,
-            //     children: [
-            //       const Text(
-            //         "系统设置",
-            //         style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            //       ),
-            //       Obx(() => Row(
-            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //             children: [
-            //               Expanded(
-            //                   child: RadioListTile(
-            //                       title: const Text("系统"),
-            //                       value: ThemeMode.system,
-            //                       groupValue:
-            //                           _settingController.themeMode.value,
-            //                       onChanged: (value) {
-            //                         _settingController
-            //                             .setThemMode(ThemeMode.system);
-            //                       })),
-            //               Expanded(
-            //                   child: RadioListTile(
-            //                       title: const Text("白天"),
-            //                       value: ThemeMode.light,
-            //                       groupValue:
-            //                           _settingController.themeMode.value,
-            //                       onChanged: (value) {
-            //                         _settingController
-            //                             .setThemMode(ThemeMode.light);
-            //                       })),
-            //               Expanded(
-            //                   child: RadioListTile(
-            //                       title: const Text("黑夜"),
-            //                       value: ThemeMode.dark,
-            //                       groupValue:
-            //                           _settingController.themeMode.value,
-            //                       onChanged: (value) {
-            //                         _settingController
-            //                             .setThemMode(ThemeMode.dark);
-            //                       })),
-            //             ],
-            //           ))
-            //     ],
-            //   ),
-            // ),
+            Container(
+              margin: const EdgeInsets.only(bottom: 5),
+              padding: const EdgeInsets.all(5),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Text(
+                    "系统设置",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                  Obx(() => Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                              child: RadioListTile(
+                                  title: const Text("系统"),
+                                  value: AdaptiveThemeMode.system,
+                                  groupValue:
+                                      _settingController.themeMode.value,
+                                  onChanged: (value) {
+
+                                    AdaptiveTheme.of(context).setSystem();
+                                    _settingController
+                                        .setThemMode(value!);
+                                  })),
+                          Expanded(
+                              child: RadioListTile(
+                                  title: const Text("白天"),
+                                  value: AdaptiveThemeMode.light,
+                                  groupValue:
+                                      _settingController.themeMode.value,
+                                  onChanged: (value) {
+                                    AdaptiveTheme.of(context).setLight();
+                                    _settingController
+                                        .setThemMode(value!);
+                                  })),
+                          Expanded(
+                              child: RadioListTile(
+                                  title: const Text("黑夜"),
+                                  value: AdaptiveThemeMode.dark,
+                                  groupValue:
+                                      _settingController.themeMode.value,
+                                  onChanged: (value) {
+                                    AdaptiveTheme.of(context).setDark();
+                                    _settingController
+                                        .setThemMode(value!);
+                                  })),
+                        ],
+                      ))
+                ],
+              ),
+            ),
             Container(
               margin: const EdgeInsets.only(bottom: 5),
               padding: const EdgeInsets.all(5),

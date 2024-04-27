@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -9,7 +10,6 @@ import 'package:sheep/controller/setting.dart';
 import 'package:sheep/controller/story.dart';
 import 'package:sheep/controller/todo.dart';
 import 'package:sheep/model/task.dart';
-import 'config/theme/theme.dart';
 import 'controller/chat.dart';
 import 'layout/base_layout.dart';
 
@@ -31,27 +31,26 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
-    Get.lazyPut(()=>ChatPageController());
-    Get.lazyPut(()=>StoryPageController());
-    Get.lazyPut(()=>SettingPageController());
+    Get.lazyPut(() => ChatPageController());
+    Get.lazyPut(() => StoryPageController());
+    Get.lazyPut(() => SettingPageController());
     Get.lazyPut(() => TodoPageController());
-    final _settingController = Get.find<SettingPageController>();
 
-
-    return GetMaterialApp(
-
-      debugShowCheckedModeBanner: false,
-      title: BaseConfig.APPLICATION_TITLE,
-      theme: AppTheme.light,
-      darkTheme: AppTheme.dark,
-      home: const BaseLayout(),
-      initialRoute: BaseConfig.BASE_INIT_ROUTER,
-      defaultTransition: Transition.rightToLeft,
-      getPages: routers,
-      themeMode: ThemeMode.system,
-      unknownRoute: unknown_page,
+    return AdaptiveTheme(
+      light: ThemeData.light(),
+      dark: ThemeData.dark(),
+      initial: AdaptiveThemeMode.light,
+      builder: (theme, darkTheme) => GetMaterialApp(
+        title: BaseConfig.APPLICATION_TITLE,
+        theme: theme,
+        darkTheme: darkTheme,
+        home: const BaseLayout(),
+        initialRoute: BaseConfig.BASE_INIT_ROUTER,
+        defaultTransition: Transition.rightToLeft,
+        getPages: routers,
+        debugShowCheckedModeBanner: false,
+        unknownRoute: unknown_page,
+      ),
     );
   }
 }
-
