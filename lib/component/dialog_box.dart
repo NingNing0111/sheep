@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:sheep/config/theme/theme.dart';
 
 class AddTaskBox extends StatelessWidget {
   final nameController;
@@ -54,7 +51,7 @@ class AddTaskBox extends StatelessWidget {
               padding: const EdgeInsets.all(2),
               child: MaterialButton(
                   onPressed: onCancel,
-                  color: AppTheme.light.cardColor,
+                  color: AdaptiveTheme.of(context).theme.buttonTheme.colorScheme?.onSecondary,
                   child: const Text(
                     "取消",
                   )),
@@ -62,7 +59,8 @@ class AddTaskBox extends StatelessWidget {
             // save button
             MaterialButton(
               onPressed: onSave,
-              color: AppTheme.light.primaryColor,
+              color: AdaptiveTheme.of(context).theme.buttonTheme.colorScheme?.onPrimary,
+
               child: const Text("添加"),
             ),
           ],

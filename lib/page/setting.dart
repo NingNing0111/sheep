@@ -33,47 +33,28 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     "系统设置",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: AdaptiveTheme.of(context).theme.textTheme.titleLarge,
                   ),
                   Obx(() => Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Expanded(
-                              child: RadioListTile(
-                                  title: const Text("系统"),
-                                  value: AdaptiveThemeMode.system,
-                                  groupValue:
-                                      _settingController.themeMode.value,
-                                  onChanged: (value) {
-
-                                    AdaptiveTheme.of(context).setSystem();
-                                    _settingController
-                                        .setThemMode(value!);
-                                  })),
-                          Expanded(
-                              child: RadioListTile(
-                                  title: const Text("白天"),
-                                  value: AdaptiveThemeMode.light,
-                                  groupValue:
-                                      _settingController.themeMode.value,
-                                  onChanged: (value) {
-                                    AdaptiveTheme.of(context).setLight();
-                                    _settingController
-                                        .setThemMode(value!);
-                                  })),
-                          Expanded(
-                              child: RadioListTile(
-                                  title: const Text("黑夜"),
-                                  value: AdaptiveThemeMode.dark,
-                                  groupValue:
-                                      _settingController.themeMode.value,
-                                  onChanged: (value) {
-                                    AdaptiveTheme.of(context).setDark();
-                                    _settingController
-                                        .setThemMode(value!);
-                                  })),
+                          Text(
+                            "开启黑夜模式",
+                            style: AdaptiveTheme.of(context).theme.textTheme.titleMedium,
+                          ),
+                          Switch(
+                              value: _settingController.isDarkTheme.value,
+                              onChanged: (value) {
+                                if (value) {
+                                  AdaptiveTheme.of(context).setDark();
+                                  _settingController.isDarkTheme.value = true;
+                                } else {
+                                  AdaptiveTheme.of(context).setLight();
+                                  _settingController.isDarkTheme.value = false;
+                                }
+                              }),
                         ],
                       ))
                 ],
@@ -86,9 +67,9 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     "OpenAI设置",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: AdaptiveTheme.of(context).theme.textTheme.titleLarge,
                   ),
                   Obx(() => Column(
                         children: [
@@ -96,7 +77,7 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                             decoration: InputDecoration(
                                 hintText:
                                     _settingController.openAIBaseUrl.value,
-                                label: const Text("API")),
+                                label: Text("API",style: AdaptiveTheme.of(context).theme.textTheme.titleMedium,)),
                             initialValue:
                                 _settingController.openAIBaseUrl.value,
                             onChanged: (value) =>
@@ -114,7 +95,7 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                                       : Icons.visibility_off),
                                 ),
                                 hintText: _settingController.openAIApiKey.value,
-                                label: const Text("Key")),
+                                label: Text("Key",style: AdaptiveTheme.of(context).theme.textTheme.titleMedium,)),
                             initialValue: _settingController.openAIApiKey.value,
                             obscureText: !_showOpenAIKey.value,
                             onChanged: (value) =>
@@ -123,9 +104,9 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 "聊天模型",
-                                style: TextStyle(fontSize: 16),
+                                style: AdaptiveTheme.of(context).theme.textTheme.titleMedium,
                               ),
                               DropdownButton<String>(
                                 value: "gpt-3.5-turbo",
@@ -144,7 +125,7 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                             decoration: InputDecoration(
                                 hintText: _settingController.chatLength.value
                                     .toString(),
-                                label: const Text("最大聊天长度")),
+                                label: Text("最大聊天长度",style: AdaptiveTheme.of(context).theme.textTheme.titleMedium,)),
                             initialValue:
                                 _settingController.chatLength.value.toString(),
                             keyboardType: TextInputType.number,
@@ -157,9 +138,9 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 "开启AI系统设定",
-                                style: TextStyle(fontSize: 16),
+                                style: AdaptiveTheme.of(context).theme.textTheme.titleMedium,
                               ),
                               Switch(
                                   value: _settingController
@@ -177,7 +158,7 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                                   decoration: InputDecoration(
                                       hintText:
                                           _settingController.systemPrompt.value,
-                                      label: const Text("系统提示词")),
+                                      label: Text("系统提示词",style: AdaptiveTheme.of(context).theme.textTheme.titleMedium,)),
                                   initialValue:
                                       _settingController.systemPrompt.value,
                                   onChanged: (value) =>
@@ -196,18 +177,18 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  const Text(
+                  Text(
                     "科大讯飞设置",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: AdaptiveTheme.of(context).theme.textTheme.titleLarge,
                   ),
                   Obx(() => Column(
                         children: [
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              const Text(
+                              Text(
                                 "开启语音回复",
-                                style: TextStyle(fontSize: 16),
+                                style: AdaptiveTheme.of(context).theme.textTheme.titleMedium,
                               ),
                               Switch(
                                   value:
@@ -236,7 +217,7 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                                           ),
                                           hintText:
                                               _settingController.xfAppID.value,
-                                          label: const Text("AppID")),
+                                          label: Text("AppID",style: AdaptiveTheme.of(context).theme.textTheme.titleMedium,)),
                                       initialValue:
                                           _settingController.xfAppID.value,
                                       obscureText: !_showXfAppID.value,
@@ -256,7 +237,7 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                                           ),
                                           hintText: _settingController
                                               .xfApiSecret.value,
-                                          label: const Text("ApiSecret")),
+                                          label: Text("ApiSecret",style: AdaptiveTheme.of(context).theme.textTheme.titleMedium,)),
                                       initialValue:
                                           _settingController.xfApiSecret.value,
                                       obscureText: !_showXfSecret.value,
@@ -276,7 +257,7 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                                           ),
                                           hintText:
                                               _settingController.xfApiKey.value,
-                                          label: const Text("ApiKey")),
+                                          label: Text("ApiKey",style: AdaptiveTheme.of(context).theme.textTheme.titleMedium,)),
                                       initialValue:
                                           _settingController.xfApiKey.value,
                                       obscureText: !_showXfKey.value,
@@ -287,7 +268,7 @@ class SettingPage extends GetResponsiveView<SettingPageController> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        const Text("语音角色"),
+                                        Text("语音角色",style: AdaptiveTheme.of(context).theme.textTheme.titleMedium,),
                                         DropdownButton<String>(
                                             value:
                                                 _settingController.ttsVCN.value,

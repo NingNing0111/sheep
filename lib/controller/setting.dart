@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 class SettingPageController extends GetxController{
   // ------ 系统 设置
   // 主题类型
-  final themeMode = AdaptiveThemeMode.system.obs;
+  final isDarkTheme = false.obs;
 
   // ------ OpenAI 设置
   // url地址
@@ -32,11 +32,6 @@ class SettingPageController extends GetxController{
   final xfApiKey = "".obs;
   // 语音模型
   final ttsVCN = "xiaoyan".obs;
-
-  void setThemMode(AdaptiveThemeMode model) async {
-    themeMode.value = model;
-    update();
-  }
 
   void setOpenAIBaseUrl(String url) async {
     openAIBaseUrl.value = url;

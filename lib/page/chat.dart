@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sheep/component/chat.dart';
 import 'package:sheep/component/chat_item.dart';
+import 'package:sheep/config/theme/theme.dart';
 import 'package:sheep/controller/chat.dart';
 import 'package:sheep/controller/setting.dart';
 import 'package:sheep/model/message.dart';
@@ -80,7 +81,6 @@ class ChatPage extends GetResponsiveView<ChatPageController> {
                 prefixIcon: GestureDetector(
                   child: const Icon(
                     Icons.cleaning_services_outlined,
-                    color: Colors.green,
                   ),
                   onTap: () {
                     if(_chatPageController.messages.isNotEmpty){

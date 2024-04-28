@@ -6,6 +6,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:logger/logger.dart';
 import 'package:sheep/config/base.dart';
 import 'package:sheep/config/router/router.dart';
+import 'package:sheep/config/theme/theme.dart';
 import 'package:sheep/controller/setting.dart';
 import 'package:sheep/controller/story.dart';
 import 'package:sheep/controller/todo.dart';
@@ -37,8 +38,8 @@ class MyApp extends StatelessWidget {
     Get.lazyPut(() => TodoPageController());
 
     return AdaptiveTheme(
-      light: ThemeData.light(),
-      dark: ThemeData.dark(),
+      light: AppTheme.light,
+      dark: AppTheme.dark,
       initial: AdaptiveThemeMode.light,
       builder: (theme, darkTheme) => GetMaterialApp(
         title: BaseConfig.APPLICATION_TITLE,

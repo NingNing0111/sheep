@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -35,7 +36,7 @@ class ToDoTile extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: Colors.pink[100],
+            color: AdaptiveTheme.of(context).theme.cardColor,
             borderRadius: BorderRadius.circular(12),
           ),
           child: Column(
@@ -65,7 +66,7 @@ class ToDoTile extends StatelessWidget {
                     child: Checkbox(
                       value: task.state,
                       onChanged: onChanged,
-                      activeColor: Colors.black,
+                      activeColor: AdaptiveTheme.of(context).theme.focusColor,
                     ),
                   ),
                   // task name

@@ -1,3 +1,4 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sheep/component/todo_tile.dart';
@@ -20,6 +21,7 @@ class TodoPage extends GetView<TodoPageController> {
     return Obx(() => Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: toAddTask,
+          backgroundColor: AdaptiveTheme.of(context).theme.cardColor,
           child: const Icon(Icons.add),
         ),
         // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
